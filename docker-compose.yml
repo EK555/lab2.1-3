@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: fastapi_spa_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: spa_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: fastapi_spa_app
+    restart: unless-stopped
+    environment:
+      # Переменные для подключения к БД
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: spa_db
+      DB_HOST: postgres
+      DB_PORT: 5432
+      PORT: 8000
+      APP_NAME: "SPA Salon API"
+      ENVIRONMENT: development
+      
+      # JWT переменные 
+      JWT_ACCESS_SECRET: supersecretaccesstokenkey1234567890
+      JWT_REFRESH_SECRET: supersecretrefreshtokenkey0987654321
+      JWT_ACCESS_EXPIRES_MINUTES: 15
+      JWT_REFRESH_EXPIRES_DAYS: 7
+      
+      # OAuth 
+      YANDEX_CLIENT_ID: your_client_id_here
+      YANDEX_CLIENT_SECRET: your_client_secret_here
+      YANDEX_CALLBACK_URL: http://localhost:8000/auth/oauth/yandex/callback
+      O_AUTH_STATE_SECRET: random_string_for_state_encryption
+      
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:
