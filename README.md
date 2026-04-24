@@ -131,6 +131,7 @@ json
 {
   "message": "Пользователь успешно зарегистрирован"
 }
+
 2. Вход (логин)
 ```bash
 curl -X POST http://localhost:8000/auth/login \
@@ -150,6 +151,7 @@ json
     "email": "user@example.com"
   }
 }
+
 3. Проверка статуса аутентификации
 ```bash
 curl -X GET http://localhost:8000/auth/whoami -b cookies.txt
@@ -162,6 +164,7 @@ json
     "email": "user@example.com"
   }
 }
+
 4. Обновление токенов
 ```bash
 curl -X POST http://localhost:8000/auth/refresh -b cookies.txt -c cookies.txt
@@ -171,6 +174,7 @@ json
 {
   "message": "Токены обновлены"
 }
+
 5. Выход из системы
 ```bash
 curl -X POST http://localhost:8000/auth/logout -b cookies.txt
@@ -223,6 +227,7 @@ json
     "total_pages": 1
   }
 }
+
 3. Получение услуги по ID
 ```bash
 curl -X GET http://localhost:8000/api/v1/services/1 -b cookies.txt
