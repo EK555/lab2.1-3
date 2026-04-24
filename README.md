@@ -258,12 +258,12 @@ curl -X PUT http://localhost:8000/api/v1/services/1 \
 curl -X DELETE http://localhost:8000/api/v1/services/1 -b cookies.txt
 ```
 ### Безопасность
-•	Пароли хешируются с использованием bcrypt (уникальная соль для каждого пароля)
-•	Access и Refresh токены передаются через HttpOnly cookies
-•	Refresh токены хранятся в БД в хешированном виде
-•	Access Token живёт 15 минут, Refresh Token — 7 дней
-•	Реализована защита от CSRF через параметр state (для OAuth)
-•	Soft delete для сохранения истории
+- Пароли хешируются с использованием bcrypt (уникальная соль для каждого пароля)
+- Access и Refresh токены передаются через HttpOnly cookies
+- Refresh токены хранятся в БД в хешированном виде
+- Access Token живёт 15 минут, Refresh Token — 7 дней
+- Реализована защита от CSRF через параметр state (для OAuth)
+- Soft delete для сохранения истории
 
 ### Миграции базы данных
 ```bash
